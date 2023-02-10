@@ -15,6 +15,7 @@ for full_val in only_val:
 
 print("Finding all delegations...")
 user_delegations = {}
+validator_delegations = {} # Green
 for adr in val_addresses:
     command = os.popen('cantod q staking delegations-to ' + adr)
     delegations = command.read()
@@ -35,6 +36,8 @@ for adr in val_addresses:
             user_delegations[del_adr] += amount
         else:
             user_delegations[del_adr] = amount
+            
+        validator_delegations[del_adr] = (adr, amount) # Green
 
 print("Calculating total stake...")
 evm_user_delegations = {}
@@ -49,6 +52,8 @@ for key in user_delegations.keys():
 print("Writing to staking.csv...")
 with open("staking.csv", "w", newline="") as f:
     writer = csv.writer(f)
-    writer.writerows(list(evm_user_delegations.items()))
+    writer.writerow(['Validator', 'Delegator address', 'Amount of token delegated']) # Green
+    for key, value in validator_delegations.items():
+        writer.writerow([value[0], key, value[1]]) # Green
 
 print("Done!")
