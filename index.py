@@ -50,4 +50,6 @@ for i, delegation in enumerate(evm_delegations_list):
 print("Writing to staking.csv...")
 with open("staking.csv", "w", newline="") as f:
     writer = csv.writer(f)
-    writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked", "Voting
+    writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked", "Voting"])
+    
+    print("Done!")
