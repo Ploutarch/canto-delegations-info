@@ -48,6 +48,10 @@ for delegation in delegations_list:
 
 evm_delegations_list.sort(key=lambda x: x[3], reverse=True)
 
-print("Writing to staking.csv...")
-with open("staking.csv", "w", newline="") as f:
-    writer = csv.writer(f)
+file_name = input("Enter the file name (without the .csv extension): ")
+if not file_name.endswith(".csv"):
+    file_name += ".csv"
+
+print("Writing to " + file_name + "...")
+with open(file_name, "w", newline="") as f:
+   
