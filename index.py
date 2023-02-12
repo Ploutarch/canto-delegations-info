@@ -48,10 +48,13 @@ for delegation in delegations_list:
 
 evm_delegations_list.sort(key=lambda x: x[3], reverse=True)
 
-file_name = input("Enter the file name (without the .csv extension): ")
-if not file_name.endswith(".csv"):
-    file_name += ".csv"
+file_name = "staking.csv"
 
 print("Writing to " + file_name + "...")
 with open(file_name, "w", newline="") as f:
-   
+    writer = csv.writer(f)
+    writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked"])
+for delegation in evm_delegations_list:
+writer.writerow(delegation)
+
+print("Done!")
