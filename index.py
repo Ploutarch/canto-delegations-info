@@ -54,7 +54,8 @@ print("Writing to " + file_name + "...")
 with open(file_name, "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked"])
-for delegation in evm_delegations_list:
+for i, delegation in enumerate(evm_delegations_list):
+delegation.append(i + 1)
 writer.writerow(delegation)
 
 print("Done!")
