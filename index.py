@@ -8,9 +8,12 @@ full_validators = command.read()
 only_val = full_validators.split("validators:")[1].split("\n- commission:")[1:]
 
 val_addresses = []
+val_monikers = {}
 for full_val in only_val:
     val_adr = [adr for adr in full_val.split("\n") if "operator_address" in adr][0].strip().split("operator_address: ")[1]
+    val_moniker = [adr for adr in full_val.split("\n") if "description.moniker" in adr][0].strip().split("description.moniker: ")[1]
     val_addresses.append(val_adr)
+    val_monikers[val_adr] = val_moniker
 
 print("Finding all delegations...")
 delegations_list = []
@@ -37,12 +40,14 @@ for delegation in delegations_list:
     addresses = command.read()
     evm_address = [adr for adr in addresses.split("\n") if "Address (EIP-55)" in adr][0].strip().split("Address (EIP-55): ")[1]
 
-    evm_delegations_list.append([val_address, evm_address, amount])
+    evm_delegations_list.append([val_monikers[val_address], val_address, evm_address, amount])
+
+evm_delegations_list.sort(key=lambda x: x[3], reverse=True)
+
+for i, delegation in enumerate(evm_delegations_list):
+    delegation.append(i + 1)
 
 print("Writing to staking.csv...")
 with open("staking.csv", "w", newline="") as f:
     writer = csv.writer(f)
-    writer.writerow(["Validator Address", "Delegator Address", "Tokens Staked"])
-    writer.writerows(evm_delegations_list)
-
-print("Done!")
+    writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked", "Voting
