@@ -46,12 +46,11 @@ for delegation in delegations_list:
 
     evm_delegations_list.append([val_monikers[val_address], val_address, evm_address, amount])
 
+print("Sorting delegations by staked amount...")
 evm_delegations_list.sort(key=lambda x: x[3], reverse=True)
 
-file_name = "staking.csv"
-
-print("Writing to " + file_name + "...")
-with open(file_name, "w", newline="") as f:
+print("Writing to staking.csv...")
+with open("staking.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["Validator Moniker", "Validator Address", "Delegator Address", "Tokens Staked", "Voting Power"])
     for i, delegation in enumerate(evm_delegations_list):
