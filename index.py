@@ -46,4 +46,8 @@ for delegation in delegations_list:
 
     evm_delegations_list.append([val_monikers[val_address], val_address, evm_address, amount])
 
-evm_delegations_list.sort(key=lambda x: x[3],
+evm_delegations_list.sort(key=lambda x: x[3], reverse=True)
+
+print("Writing to staking.csv...")
+with open("staking.csv", "w", newline="") as f:
+    writer = csv.writer(f)
