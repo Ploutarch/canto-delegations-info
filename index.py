@@ -2,7 +2,7 @@ import os
 import csv
 
 print("Querying validators list...")
-command = os.popen('cantod q staking validators')
+command = os.popen('cantod q staking validators  --limit 201')
 full_validators = command.read()
 
 only_val = full_validators.split("validators:")[1].split("\n- commission:")[1:]
